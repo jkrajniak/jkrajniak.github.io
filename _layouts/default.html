@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+  {%- include head.html -%}
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <div class="header-inner">
+          <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title | escape }}</a>
+          <nav class="site-nav">
+            {%- for path in site.header_pages -%}
+              {%- assign my_page = site.pages | where: "path", path | first -%}
+              {%- if my_page.title -%}
+                <a class="nav-link" href="{{ my_page.url | relative_url }}">{{ my_page.title | escape }}</a>
+              {%- endif -%}
+            {%- endfor -%}
+            <a class="nav-link" href="{{ '/about/' | relative_url }}">About</a>
+            <div class="theme-switcher">
+              <button class="theme-toggle" aria-label="Theme" type="button">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                <svg class="icon-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </button>
+              <div class="theme-menu">
+                <button class="theme-option" data-theme-value="light" type="button">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                  Light
+                </button>
+                <button class="theme-option" data-theme-value="dark" type="button">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                  Dark
+                </button>
+                <button class="theme-option" data-theme-value="auto" type="button">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                  Auto
+                </button>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <div class="container">
+        {{ content }}
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-inner">
+          <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author | escape }}. {{ site.description | escape }}</p>
+          <div class="footer-links">
+            {%- if site.github_username -%}
+              <a href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener">GitHub</a>
+            {%- endif -%}
+            {%- if site.twitter_username -%}
+              <a href="https://twitter.com/{{ site.twitter_username }}" target="_blank" rel="noopener">Twitter</a>
+            {%- endif -%}
+            <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script>
+      (function() {
+        var root = document.documentElement;
+        var switcher = document.querySelector('.theme-switcher');
+        if (!switcher) return;
+
+        var toggle = switcher.querySelector('.theme-toggle');
+        var menu = switcher.querySelector('.theme-menu');
+        var options = switcher.querySelectorAll('.theme-option');
+
+        function resolve(pref) {
+          if (pref === 'auto') {
+            return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          return pref;
+        }
+
+        function apply(pref) {
+          var resolved = resolve(pref);
+          root.setAttribute('data-theme', resolved);
+          root.setAttribute('data-theme-pref', pref);
+          markActive(pref);
+          var iframe = document.querySelector('iframe.giscus-frame');
+          if (iframe) {
+            iframe.contentWindow.postMessage(
+              { giscus: { setConfig: { theme: resolved === 'dark' ? 'dark' : 'light' } } },
+              'https://giscus.app'
+            );
+          }
+        }
+
+        function markActive(pref) {
+          options.forEach(function(opt) {
+            opt.classList.toggle('active', opt.getAttribute('data-theme-value') === pref);
+          });
+        }
+
+        function closeMenu() {
+          switcher.classList.remove('open');
+        }
+
+        toggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          switcher.classList.toggle('open');
+        });
+
+        options.forEach(function(opt) {
+          opt.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var value = opt.getAttribute('data-theme-value');
+            if (value === 'auto') {
+              localStorage.removeItem('theme');
+            } else {
+              localStorage.setItem('theme', value);
+            }
+            apply(value);
+            closeMenu();
+          });
+        });
+
+        document.addEventListener('click', function() { closeMenu(); });
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') closeMenu();
+        });
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+          var pref = localStorage.getItem('theme') || 'auto';
+          if (pref === 'auto') apply('auto');
+        });
+
+        markActive(root.getAttribute('data-theme-pref') || 'auto');
+      })();
+    </script>
+  </body>
+</html>

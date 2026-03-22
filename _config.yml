@@ -34,22 +34,38 @@ theme: minima
 plugins:
   - jekyll-feed
 
-# Exclude from processing.
-# The following items will not be processed, by default.
-# Any item listed under the `exclude:` key here will be automatically added to
-# the internal "default list".
-#
-# Excluded items can be processed by explicitly listing the directories or
-# their entries' file path in the `include:` list.
-#
-# exclude:
-#   - .sass-cache/
-#   - .jekyll-cache/
-#   - gemfiles/
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules/
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+show_excerpts: true
+excerpt_separator: "\n\n"
+
+# Homepage layout: "featured_grid" | "masonry"
+homepage_layout: "featured_grid"
+
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  syntax_highlighter: rouge
+
+comments:
+  giscus:
+    repo: "jkrajniak/jkrajniak.github.io"
+    repo_id: "R_kgDORr7cWg"
+    category: "Blog Comments"
+    category_id: "DIC_kwDORr7cWs4C4-fK"
+    mapping: "pathname"
+    reactions_enabled: "1"
+    input_position: "top"
+    theme: "light"
+    lang: "en"
+
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/
+  - blog-migration/
+  - _medium/
+  - Makefile
+  - README.md
+  - README.html

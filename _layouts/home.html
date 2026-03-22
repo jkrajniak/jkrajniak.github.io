@@ -1,0 +1,111 @@
+---
+layout: default
+---
+
+<div class="home">
+  <div class="hero">
+    <h1>{{ site.title | escape }}</h1>
+    <p class="hero-subtitle">{{ site.description | escape }}</p>
+  </div>
+
+  {%- assign posts = site.posts -%}
+  {%- assign layout_mode = site.homepage_layout | default: "featured_grid" -%}
+
+  {%- if layout_mode == "masonry" -%}
+
+    <div class="post-masonry">
+      {%- for post in posts -%}
+        <article class="post-masonry-card">
+          <a href="{{ post.url | relative_url }}" class="post-masonry-link">
+            <time class="post-card-date" datetime="{{ post.date | date_to_xmlschema }}">
+              {{ post.date | date: "%b %-d, %Y" }}
+            </time>
+            <h2 class="post-masonry-title">{{ post.title | escape }}</h2>
+            {%- if post.description and post.description != "" -%}
+              <p class="post-masonry-excerpt">{{ post.description | strip_html | truncatewords: 50 }}</p>
+            {%- elsif post.excerpt and post.excerpt != "" -%}
+              {%- assign stripped_excerpt = post.excerpt | strip_html | strip | truncatewords: 50 -%}
+              {%- if stripped_excerpt != "" -%}
+                <p class="post-masonry-excerpt">{{ stripped_excerpt }}</p>
+              {%- endif -%}
+            {%- endif -%}
+            {%- if post.tags.size > 0 -%}
+              <div class="post-card-tags">
+                {%- for tag in post.tags -%}
+                  <span class="tag">{{ tag }}</span>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </a>
+        </article>
+      {%- endfor -%}
+    </div>
+
+  {%- else -%}
+
+    {%- assign featured_post = posts | first -%}
+    {%- assign remaining_posts = posts | slice: 1, posts.size -%}
+
+    <article class="post-featured">
+      <a href="{{ featured_post.url | relative_url }}" class="post-featured-link">
+        <div class="post-featured-content">
+          <span class="post-featured-badge">Latest</span>
+          <time class="post-card-date" datetime="{{ featured_post.date | date_to_xmlschema }}">
+            {{ featured_post.date | date: "%b %-d, %Y" }}
+          </time>
+          <h2 class="post-featured-title">{{ featured_post.title | escape }}</h2>
+          {%- if featured_post.description and featured_post.description != "" -%}
+            <p class="post-featured-excerpt">{{ featured_post.description | strip_html | truncatewords: 50 }}</p>
+          {%- elsif featured_post.excerpt and featured_post.excerpt != "" -%}
+            {%- assign stripped_excerpt = featured_post.excerpt | strip_html | strip | truncatewords: 50 -%}
+            {%- if stripped_excerpt != "" -%}
+              <p class="post-featured-excerpt">{{ stripped_excerpt }}</p>
+            {%- endif -%}
+          {%- endif -%}
+          {%- if featured_post.tags.size > 0 -%}
+            <div class="post-card-tags">
+              {%- for tag in featured_post.tags -%}
+                <span class="tag">{{ tag }}</span>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+          <span class="post-card-read-more">Read article &rarr;</span>
+        </div>
+      </a>
+    </article>
+
+    {%- if remaining_posts.size > 0 -%}
+      <div class="post-grid">
+        {%- for post in remaining_posts -%}
+          <article class="post-card">
+            <a href="{{ post.url | relative_url }}" class="post-card-link">
+              <div class="post-card-content">
+                <time class="post-card-date" datetime="{{ post.date | date_to_xmlschema }}">
+                  {{ post.date | date: "%b %-d, %Y" }}
+                </time>
+                <h2 class="post-card-title">{{ post.title | escape }}</h2>
+                {%- if post.description and post.description != "" -%}
+                  <p class="post-card-excerpt">{{ post.description | strip_html | truncatewords: 30 }}</p>
+                {%- elsif post.excerpt and post.excerpt != "" -%}
+                  {%- assign stripped_excerpt = post.excerpt | strip_html | strip | truncatewords: 30 -%}
+                  {%- if stripped_excerpt != "" -%}
+                    <p class="post-card-excerpt">{{ stripped_excerpt }}</p>
+                  {%- endif -%}
+                {%- endif -%}
+                {%- if post.tags.size > 0 -%}
+                  <div class="post-card-tags">
+                    {%- for tag in post.tags -%}
+                      <span class="tag">{{ tag }}</span>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+                <span class="post-card-read-more">Read article &rarr;</span>
+              </div>
+            </a>
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  {%- endif -%}
+</div>
