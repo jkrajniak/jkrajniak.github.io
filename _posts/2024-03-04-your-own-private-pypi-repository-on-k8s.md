@@ -13,7 +13,7 @@ tags:
 
 ---
 
-![](https://cdn-images-1.medium.com/max/800/0*JrbEFKkNsKgW_B4U)
+![](/assets/images/posts/your-own-private-pypi-repository-on-k8s/8665e1e313.png)
 
 Photo by [Growtika](https://unsplash.com/@growtika?utm_source=medium&utm_medium=referral) on [Unsplash](https://unsplash.com?utm_source=medium&utm_medium=referral)
 
@@ -39,7 +39,7 @@ This is where [simple503](https://simple503.readthedocs.io/en/latest/) comes. It
 
 With the fundamental concepts clear, let’s start with the architecture overview.
 
-![](https://cdn-images-1.medium.com/max/800/1*-OmfCW_TQZCOkk5JeDYiZw.png)
+![](/assets/images/posts/your-own-private-pypi-repository-on-k8s/0185039215.png)
 
 Sketch of the solution (by author)
 

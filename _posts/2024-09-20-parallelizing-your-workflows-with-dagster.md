@@ -12,7 +12,7 @@ tags:
 
 ---
 
-![](https://cdn-images-1.medium.com/max/800/0*Pz-7WE2qvG_s9HAg)
+![](/assets/images/posts/parallelizing-your-workflows-with-dagster/964d15d942.png)
 
 Photo by [EJ Strat](https://unsplash.com/@xoforoct?utm_source=medium&utm_medium=referral) on [Unsplash](https://unsplash.com?utm_source=medium&utm_medium=referral)
 
@@ -36,7 +36,7 @@ Dagster, a next-gen orchestration platform, redefines the classic Airflow model 
 
 Below you can find the general schema of the computation flow that will be implemented in this work.
 
-![](https://cdn-images-1.medium.com/max/800/1*spU9DsOv7HUGQGu96wldsw.png)
+![](/assets/images/posts/parallelizing-your-workflows-with-dagster/fcee457c91.png)
 
 Computational flow (by author)
 

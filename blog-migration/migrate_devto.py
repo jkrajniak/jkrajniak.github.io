@@ -24,7 +24,13 @@ from urllib.parse import urlparse
 import httpx
 
 
-DEVTO_CDN_HOSTS = {"dev-to-uploads.s3.amazonaws.com", "media2.dev.to"}
+DEVTO_CDN_HOSTS = {
+    "dev-to-uploads.s3.amazonaws.com",
+    "media2.dev.to",
+    "media.dev.to",
+    "cdn-images-1.medium.com",
+    "res.cloudinary.com",
+}
 DEVTO_API = "https://dev.to/api"
 
 

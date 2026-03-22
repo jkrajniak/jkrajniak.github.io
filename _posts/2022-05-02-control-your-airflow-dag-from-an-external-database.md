@@ -12,7 +12,7 @@ tags:
 
 ---
 
-![](https://cdn-images-1.medium.com/max/800/1*bfWlGk1As43U9r_tV_CdQA.jpeg)
+![](/assets/images/posts/control-your-airflow-dag-from-an-external-database/2554902a68.jpeg)
 
 Zaanse Schans, Zaandam, Netherlands (by author)
 
@@ -31,7 +31,7 @@ In this short story, I will show how to use an external configuration source to 
 - scheduling time
 - execution parameters
 
-![](https://cdn-images-1.medium.com/max/800/1*M-yvjMW48kSoVpKOx6abmw.png)
+![](/assets/images/posts/control-your-airflow-dag-from-an-external-database/5cc4db20cd.png)
 
 The flow of dynamically configured DAGs (by author)
 
@@ -104,7 +104,7 @@ with DAG(
 
 The configuration from a database is ready every hour. The rows are serialized to JSON and saved in Airflow Variable:
 
-![](https://cdn-images-1.medium.com/max/800/1*AHvtV5CHtR76-90M9hi0-Q.png)
+![](/assets/images/posts/control-your-airflow-dag-from-an-external-database/8e5d23a30e.png)
 
 List of variables in Airflow (by author)
 
@@ -156,7 +156,7 @@ for dag_id, schedule, description in dags_config:
 
 Here, two important parts should be highlighted. A function `create_dag` is responsible for the whole process of defining tasks and relationships between them. And, the last part, iterates over the configurations from DB. Notice the usage of `globals()` the built-in method, which returns a dictionary.
 
-![](https://cdn-images-1.medium.com/max/800/1*6w8QmldDZpLp4Pd4Nh_BxA.png)
+![](/assets/images/posts/control-your-airflow-dag-from-an-external-database/4aad206f22.png)
 
 List of created dynamically DAGs (by author)
 

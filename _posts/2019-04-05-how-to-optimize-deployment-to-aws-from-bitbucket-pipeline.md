@@ -15,7 +15,7 @@ tags:
 
 ### How to optimize deployment to AWS using Bitbucket pipelines
 
-![](https://cdn-images-1.medium.com/max/800/0*EDC2X0zN934fmRdv)
+![](/assets/images/posts/how-to-optimize-deployment-to-aws-from-bitbucket-pipeline/af3969a443.png)
 
 Photo by [Quinten de Graaf](https://unsplash.com/@quinten149?utm_source=medium&utm_medium=referral) on [Unsplash](https://unsplash.com?utm_source=medium&utm_medium=referral)
 
@@ -130,7 +130,7 @@ Although bitbucket does not have golang caching available, we can use [a custom 
 
 [Bitbucket pipelines offer the ability to run the steps in parallel](https://confluence.atlassian.com/bitbucket/parallel-steps-946606807.html). This is pretty simple to set up. Below the example of the pipeline that contains several steps running in parallel and a pretty nice graphical representation of such config.
 
-![](https://cdn-images-1.medium.com/max/800/1*wu_9ohdIQ6_nPEPR9o7JtQ.png)
+![](/assets/images/posts/how-to-optimize-deployment-to-aws-from-bitbucket-pipeline/1a2e7cd77d.png)
 
 ```
 pipelines:  
@@ -174,7 +174,7 @@ Fortunately, we still can use an old good **make** instead of built-in bitbucket
 
 Let assume that we have a product composed of several services (A…F) that lays in one repository:
 
-![](https://cdn-images-1.medium.com/max/800/1*X3T8fcOGwR9ZGxj4GUMQ3g.png)
+![](/assets/images/posts/how-to-optimize-deployment-to-aws-from-bitbucket-pipeline/d77b452641.png)
 
 The relationship between the services
 
@@ -269,7 +269,7 @@ stage_3
 
 As we defined that every stage will cost us around 10s, we should expect that the total time will be 60 s; if we run it completely in parallel then the time should be reduced to 30se (stage 1 + stage 2 + stage 3).
 
-![](https://cdn-images-1.medium.com/max/800/1*t8VC-kl7YLa-KjrbzsCV7w.png)
+![](/assets/images/posts/how-to-optimize-deployment-to-aws-from-bitbucket-pipeline/b324e8a38e.png)
 
 The results of running the pipeline with different values of **-jN**
 

@@ -13,7 +13,7 @@ tags:
 
 ---
 
-![](https://cdn-images-1.medium.com/max/800/0*ie7aS6fZ7QOX19th)
+![](/assets/images/posts/export-datastores-from-multiple-projects-to-bigquery/8e7788b3f6.png)
 
 Nieuwpoort (by author)
 
@@ -28,7 +28,7 @@ This is a short extension to my previous [story](https://towardsdatascience.com/
 
 Overall, the problem can be expressed with the following diagram
 
-![](https://cdn-images-1.medium.com/max/800/1*zrZ_xTK3didXwrG-LvqKkA.png)
+![](/assets/images/posts/export-datastores-from-multiple-projects-to-bigquery/27b62708e5.png)
 
 Sketch of the architecture (by author)
 
@@ -88,13 +88,13 @@ We are interested in SA that is used by the worker. By default, this service acc
 
 Hence, to give your Dataflow pipeline access to Datastores that are in a different project. Therefore, in each of the source project, add account `<project-number>-compute@developer.gserviceaccount.com` to the project with the role `role/datastore.viewer` .
 
-![](https://cdn-images-1.medium.com/max/800/1*IeQbcncufsJTI_jbpN8aKQ.png)
+![](/assets/images/posts/export-datastores-from-multiple-projects-to-bigquery/9cf80d00f5.png)
 
 IAM permissions in one of the source projects (by author)
 
 That’s all — the pipeline works as expected:
 
-![](https://cdn-images-1.medium.com/max/800/1*oSU2TNWj-okzfKsY5Rw7rg.png)
+![](/assets/images/posts/export-datastores-from-multiple-projects-to-bigquery/4bcfce481a.png)
 
 Extended pipeline with the projects step (by author)
 

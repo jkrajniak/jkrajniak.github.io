@@ -13,7 +13,7 @@ tags:
 
 ---
 
-![](https://cdn-images-1.medium.com/max/800/1*AM6GIySotyiDsMR69fLtcQ.jpeg)
+![](/assets/images/posts/export-datastore-to-bigquery-using-google-dataflow/10afc8394e.jpeg)
 
 Puerto de la Cruz (by author)
 
@@ -41,7 +41,7 @@ Google Dataflow is a managed solution to execute different data processing schem
 
 Dataflow model is organized around the pipeline, which is your data processing workflow from start to end. Inside the pipeline two objects are important. PCollection represents a distributed data set, and PTransform represents a processing operation on PCollection.
 
-![](https://cdn-images-1.medium.com/max/800/1*0sWx6tm7plrmc_8j09IIeA.png)
+![](/assets/images/posts/export-datastore-to-bigquery-using-google-dataflow/81716eb38a.png)
 
 Overview on pcollection/ptransform (by author)
 
@@ -121,7 +121,7 @@ In each of the write methods, we use `SCHEMA_AUTODETECT` option. The output tabl
 
 If you run the pipeline in Google Dataflow then the entire job is visualized as below:
 
-![](https://cdn-images-1.medium.com/max/800/1*X4tcr1FtRMHd9Wicd1x-dA.png)
+![](/assets/images/posts/export-datastore-to-bigquery-using-google-dataflow/4b45648da1.png)
 
 Data pipeline (by author)
 
@@ -131,7 +131,7 @@ So actually what is happening under the hood when you call the command to run th
 
 With a runner `dataflow` , the workflow will be executed in GCP. First, your code of the pipeline is packed as a PyPi package (you can see in the logs that command `python setup.py sdist` is executed), then the `zip` file is copied to Google Cloud Storage bucket. Next workers are setup. The workers are nothing more than [Google Cloud Compute](https://cloud.google.com/compute) instances. You can even see them in the Cloud console:
 
-![](https://cdn-images-1.medium.com/max/800/1*vSMro0WWwPtw5codnpQGPQ.png)
+![](/assets/images/posts/export-datastore-to-bigquery-using-google-dataflow/6abf3befc4.png)
 
 and, if you need, you can ssh into them. Be aware, that it takes time to spin up the workers, download and install your pipeline on the workers.
 
@@ -156,7 +156,7 @@ or [Google Workflow](https://cloud.google.com/workflows). Although it is feasibl
 
 Well, you pay for the execution time (billed per second increments) and for the resources. The pipeline has at least one worker, which consumes vCPU, memory, storage and optionally GPU. If your tasks are not so computational and storage-intensive then you can change the default settings by adjusting WorkerOptions. By default, the disk size of the worker for batch processing is set to 250 GB and for stream processing to 400 GB. If your processing can fit into the memory then this is a quite big number. In the above example, I have used 25 GB of disk size per worker — it was enough.
 
-![](https://cdn-images-1.medium.com/max/800/1*9L-qhNX_IYFzuT8xG27lLw.png)
+![](/assets/images/posts/export-datastore-to-bigquery-using-google-dataflow/2044c04577.png)
 
 Price estimation, two workers, 25GB per worker, monthly vCPU 1 hour (by author)
 

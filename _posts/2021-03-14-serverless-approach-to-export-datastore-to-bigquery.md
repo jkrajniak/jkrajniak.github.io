@@ -13,7 +13,7 @@ tags:
 
 ---
 
-![](https://cdn-images-1.medium.com/max/1200/0*R6zM_t5eWmE9YfM-)
+![](/assets/images/posts/serverless-approach-to-export-datastore-to-bigquery/23aff43b91.png)
 
 Photo by [Maksym Kaharlytskyi](https://unsplash.com/@qwitka?utm_source=medium&utm_medium=referral) on [Unsplash](https://unsplash.com?utm_source=medium&utm_medium=referral)
 
@@ -40,7 +40,7 @@ The solution is simple but it has some drawbacks. The major one is that the proc
 
 For multiple kinds a simple optimization technique would be to overlap the export/import jobs, as shown below:
 
-![](https://cdn-images-1.medium.com/max/800/0*0KMG2wY89gLKu9of)
+![](/assets/images/posts/serverless-approach-to-export-datastore-to-bigquery/a6810d99f5.png)
 
 Overlap of parallel export/import jobs (by author)
 
@@ -66,7 +66,7 @@ Although the above two commands could be executed from a [virtual machine](https
 In this short story, I will show how to build the export/import procedure using serverless components. This is possible because in the end we will only call [GCP](http://cloud.google.com/) APIs and wait for the results — the work will be done in the background.  
 The architecture diagram of the solution is shown below.
 
-![](https://cdn-images-1.medium.com/max/800/1*FicdIyE4kA0CNwFS-shCLg.png)
+![](/assets/images/posts/serverless-approach-to-export-datastore-to-bigquery/6afa90b83c.png)
 
 The architecture diagram of the serverless solution (by author)
 

@@ -13,7 +13,7 @@ tags:
 
 ---
 
-![](https://cdn-images-1.medium.com/max/800/1*kjQXb3ZOk9gebqEBTyRMRw.png)
+![](/assets/images/posts/keep-track-on-your-cloud-computations/cf73c676f2.png)
 
 ### Keep track of your cloud computations
 
@@ -21,7 +21,7 @@ Increasing interested in using small computation units enclosed in AWS Lambda, A
 
 Let us jump directly into the problem by analysing the following computation scheme
 
-![](https://cdn-images-1.medium.com/max/800/0*9EwR7FPkUpUWsZcd)
+![](/assets/images/posts/keep-track-on-your-cloud-computations/d275afbff9.png)
 
 It is composed of three parts: *splitter, sub-processes, and collector.* By design, the sub-processes are the stateless functions that take input data and produce output(s). Hence, they do not have a notion about the whole computing process. Moreover, we also impose that the collector and splitter are stateless functions.
 
@@ -33,7 +33,7 @@ The *state* can be stored in the form of lookup table indexed by unique sub-proc
 
 Below is the extended computation scheme with additional elements mentioned previously.
 
-![](https://cdn-images-1.medium.com/max/800/0*5kwE35Drhr_2SZJ4)
+![](/assets/images/posts/keep-track-on-your-cloud-computations/bae8cbadae.png)
 
 The state of the computation (labelled by *job-id*) is monitored by the additional component *state-observer*. It periodically queries the lookup table and counts the number of sub-processes that are in state *pending.* If the result of the query is zero the whole *computation* is considered to be *completed.* Moreover, the update of the state is recorded with the timestamp. This allows to use of a last-resort method, basically *timeout* the computation job.
 
@@ -45,7 +45,7 @@ We demonstrate the implementation using the components of the AWS public cloud. 
 
 The diagram below shows the architecture of the solution. It basically reflects the general computation scheme showed above.
 
-![](https://cdn-images-1.medium.com/max/800/1*afQj8BCEO5RQU8ZEndowqw.png)
+![](/assets/images/posts/keep-track-on-your-cloud-computations/7a29f38059.png)
 
 The idea behind this example is rather simple. There is a bucket that contains a bunch of text documents to process. We would like to calculate the word frequency in each of the document and store such a map (word→freq) for each of it in an output bucket. We will not describe the whole code, it is available in my [GitHub project](https://github.com/jkrajniak/demo-parallel-processing/tree/master)— only the key components.
 
@@ -71,7 +71,7 @@ The key point lays in the GSI, precisely in the sort key which is a concatenatio
 
 The observer is a lambda that periodically counts the number of processes (using the DynamoDB query on GSI — the code is above) in the *pending* state (for the requested `job_id`). This is realized by combining the queue with a certain delay (30 seconds here) and attached lambda function.
 
-![](https://cdn-images-1.medium.com/max/800/1*RD5_4s1D9E3aGhzWItEpQw.png)
+![](/assets/images/posts/keep-track-on-your-cloud-computations/9d30fea8de.png)
 
 The delay on the SQS queue can be achieved by `DelaySeconds` property. If all of the processes are done then the observation is done and the message is sent to the SNS topic:
 
