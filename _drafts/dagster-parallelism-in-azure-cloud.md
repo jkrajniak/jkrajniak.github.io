@@ -11,8 +11,6 @@ tags:
   - azure
 ---
 
----
-
 ### Dagster parallelism in Azure Cloud
 
 In [Parallelizing Your Workflows with Dagster](/2024/09/20/parallelizing-your-workflows-with-dagster.html) I showed a fan-out/fan-in pipeline: split data with `DynamicOut`, process batches with `.map()`, collect with `.collect()`, and wrap it in `@graph_asset`. That example runs in one process and keeps intermediate values in memory (DuckDB + local Dagster storage).
@@ -32,12 +30,9 @@ The production shape looks like this:
 
 Snowflake is still used **inside** ops for SQL. It is **not** the bus for passing Python objects between Dagster steps.
 
-```
-registry asset ──ADLS──► batch manifest asset ──ADLS──► graph asset
-                                                      │
-                        truncate (Snowflake SQL) ◄────┤
-                        fan_out ──ADLS──► map(run_batch) × N ──ADLS──► summarize
-```
+![Orchestration flow: ADLS pickle handoffs between assets and inner ops; Snowflake only for SQL inside ops](/assets/images/posts/dagster-parallelism-in-azure-cloud/pipeline-flow.svg)
+
+*Orchestration flow (by author). Edit `pipeline-flow.mmd` in the same folder and run `make diagram-dagster-azure-io` to regenerate the SVG.*
 
 ### Rule number one: two kinds of persistence
 

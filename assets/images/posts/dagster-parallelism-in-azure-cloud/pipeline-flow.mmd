@@ -1,0 +1,15 @@
+flowchart LR
+    RA["registry asset"] -->|"ADLS pickle"| BMA["batch manifest asset"]
+    BMA -->|"ADLS pickle"| TR["truncate op<br/>(Snowflake SQL)"]
+    TR --> FO["fan_out<br/>(DynamicOut)"]
+    FO -->|"ADLS map"| RB["run_batch × N<br/>(K8s Jobs)"]
+    RB -->|"ADLS collect"| SU["summarize op"]
+    SU -->|"ADLS pickle"| OUT["graph return value"]
+
+    SF[("Snowflake<br/>tables")] -.->|"SQL inside ops"| TR
+    SF -.-> RB
+
+    classDef adls fill:#e8f4fc,stroke:#0078d4,color:#003366
+    classDef snowflake fill:#f0f4ff,stroke:#11567f,color:#11567f
+    class RA,BMA,FO,RB,SU,OUT adls
+    class SF snowflake

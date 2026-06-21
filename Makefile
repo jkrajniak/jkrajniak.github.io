@@ -1,4 +1,4 @@
-.PHONY: install serve build clean migrate migrate-text migrate-devto
+.PHONY: install serve build clean migrate migrate-text migrate-devto diagram-dagster-azure-io
 
 SHELL := /bin/bash
 RBENV := eval "$$(rbenv init - bash)" &&
@@ -22,6 +22,13 @@ build: install
 clean:
 	$(RBENV) bundle exec jekyll clean
 	rm -rf _site .jekyll-cache .jekyll-metadata
+
+# ── Diagrams ─────────────────────────────────────────────────────────
+diagram-dagster-azure-io:
+	npx --yes @mermaid-js/mermaid-cli \
+		-i assets/images/posts/dagster-parallelism-in-azure-cloud/pipeline-flow.mmd \
+		-o assets/images/posts/dagster-parallelism-in-azure-cloud/pipeline-flow.svg \
+		-b transparent
 
 # ── Migration ────────────────────────────────────────────────────────
 migrate:
