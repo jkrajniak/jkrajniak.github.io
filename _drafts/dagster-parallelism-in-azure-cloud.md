@@ -177,9 +177,9 @@ def orchestrate(batch_manifest: dict) -> dict:
 
 Every op that returns a `dict` in this chain declares `io_manager_key=IO_MANAGER_MY_PIPELINE`. The **final** op (`summarize`) is the graph return value — on Dagster 1.12 its `Out` is what actually controls where the asset output is stored (see gotchas below).
 
-### Dagster 1.12 gotchas (read this before debugging for a week)
+### Dagster 1.12 gotchas
 
-We hit several APIs that **look** supported in docs or newer versions but **fail at import time or runtime** on **1.12.x**:
+On **1.12.x**, a few APIs look supported in docs or newer versions but **fail at import time or runtime**:
 
 | Approach | On our 1.12 deploy |
 |----------|-------------------|
@@ -216,22 +216,12 @@ def test_pipeline_uses_adls_io_not_default_snowflake():
 - [ ] Tests assert IO manager keys on ops (cheap, catches regressions before deploy).
 - [ ] You know the difference between **op succeeded** vs **handle output failed** in the UI.
 
-### Why this took so long in practice
-
-The orchestration pattern from the [2024 post](/2024/09/20/parallelizing-your-workflows-with-dagster.html) was already correct. The time went into **IO wiring** and **version-specific decorator traps**:
-
-- Mixing **warehouse IO** (DataFrames) with **orchestration IO** (pickled Python objects).
-- Assuming the **graph asset decorator** would accept `io_manager_key` like `@asset` does.
-- Chasing errors in **truncate / SQL** when the failure was **`handle_output`** on the next line of the log.
-
-Once every step declares the blob IO manager explicitly, the same graph runs reliably: manifest on ADLS, dynamic map to K8s, summary back on ADLS, Snowflake only where SQL belongs.
-
 ### Conclusions
 
-Dynamic `graph_asset` parallelism and Azure scale fit together when you treat **orchestration state** and **warehouse tables** as two storage problems. Use **ADLS pickle IO** for manifests and batch metadata across assets and inner ops; keep **Snowflake IO** for tabular assets; on Dagster 1.12, pin IO on **`@op` outputs** rather than fighting unsupported decorator kwargs.
+Dynamic `graph_asset` parallelism and Azure scale fit together when you treat **orchestration state** and **warehouse tables** as two storage problems. Use **ADLS pickle IO** for manifests and batch metadata across assets and inner ops; keep **Snowflake IO** for tabular assets; on Dagster 1.12, pin IO on **`@op` outputs** rather than unsupported decorator kwargs.
 
 If you have not read the first part yet, start with [Parallelizing Your Workflows with Dagster](/2024/09/20/parallelizing-your-workflows-with-dagster.html) for the `DynamicOut` / `.map()` / `.collect()` basics — this post is the Azure storage layer on top.
 
 ---
 
-I hope this saves you the week we spent on `SnowflakeIOManager` and `with_attributes`. Questions welcome on [Twitter](https://twitter.com/MrTheodor).
+Questions welcome on [Twitter](https://twitter.com/MrTheodor).
