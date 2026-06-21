@@ -9,7 +9,12 @@ tags:
   - data-engineering
   - parallelization
   - azure
+image: "/assets/images/posts/dagster-parallelism-in-azure-cloud/cb55bb0aaa.jpg"
 ---
+
+![](/assets/images/posts/dagster-parallelism-in-azure-cloud/cb55bb0aaa.jpg)
+
+Photo by [NASA](https://unsplash.com/@nasa) on [Unsplash](https://unsplash.com)
 
 ### Dagster parallelism in Azure Cloud
 
