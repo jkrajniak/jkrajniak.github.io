@@ -20,7 +20,7 @@ Photo by [NASA](https://unsplash.com/@nasa) on [Unsplash](https://unsplash.com)
 
 In [Parallelizing Your Workflows with Dagster](/2024/09/20/parallelizing-your-workflows-with-dagster.html) I showed a fan-out/fan-in pipeline: split data with `DynamicOut`, process batches with `.map()`, collect with `.collect()`, and wrap it in `@graph_asset`. That example runs in one process and keeps intermediate values in memory (DuckDB + local Dagster storage).
 
-That pattern breaks down when you move heavy work to **Kubernetes Jobs** on separate nodes. Dagster still orchestrates one parent run, but **every step output that must survive until the next step needs a shared store**. In our Azure setup that store is **ADLS Gen2** (Azure Blob), not the warehouse IO manager used for pandas tables.
+That pattern breaks down when you move heavy work to **Kubernetes Jobs** on separate nodes. Dagster still orchestrates one parent run, but **every step output that must survive until the next step needs a shared store**. On Azure, that store is often **ADLS Gen2** (Azure Blob), not the warehouse IO manager used for pandas tables.
 
 This post is the sequel: same dynamic graph idea, but with **explicit IO managers** so orchestration handoffs do not fall through to the default Snowflake pandas manager.
 
@@ -44,9 +44,9 @@ Snowflake is still used **inside** ops for SQL. It is **not** the bus for passin
 | Kind | Examples | IO manager |
 |------|----------|------------|
 | **Orchestration handoffs** | manifests, batch specs, run summaries, `dict` / `list` | ADLS pickle (`ADLS2PickleIOManager`) |
-| **Analytical tables** | `pd.DataFrame` assets, dbt outputs | Snowflake pandas IO (default in our repo) |
+| **Analytical tables** | `pd.DataFrame` assets, dbt outputs | Snowflake pandas IO (often the default) |
 
-If you return a **`dict`** from an op and do not set an IO manager, Dagster uses the **default** resource — in our monorepo that is **`SnowflakeIOManager`**, which only accepts **`DataFrame`**. The op body can succeed and the step still fails on **handle output**.
+If you return a **`dict`** from an op and do not set an IO manager, Dagster uses the **default** resource — if that default is **`SnowflakeIOManager`**, it only accepts **`DataFrame`**. The op body can succeed and the step still fails on **handle output**.
 
 Typical error:
 
@@ -58,7 +58,7 @@ The logs are misleading: you often see the business logic succeed (`Truncated 0 
 
 ### Register a dedicated ADLS IO manager
 
-We use `dagster-azure` and a separate prefix per pipeline so blobs do not collide:
+Use `dagster-azure` and a separate prefix per pipeline so blobs do not collide:
 
 ```python
 from dagster_azure.adls2 import (
@@ -75,7 +75,7 @@ adls2 = ADLS2Resource(
 )
 
 io_manager_my_pipeline = ADLS2PickleIOManager(
-    adls2_file_system="dagster-iomanagers",
+    adls2_file_system="my-dagster-io",
     adls2_prefix="my-pipeline",
     adls2=adls2,
 )
@@ -181,7 +181,7 @@ Every op that returns a `dict` in this chain declares `io_manager_key=IO_MANAGER
 
 On **1.12.x**, a few APIs look supported in docs or newer versions but **fail at import time or runtime**:
 
-| Approach | On our 1.12 deploy |
+| Approach | On Dagster 1.12.x |
 |----------|-------------------|
 | `@graph_asset(io_manager_key=…)` | Not supported on the decorator |
 | `asset.with_attributes(io_manager_key=…)` | `TypeError` at **import** — code location never loads |
