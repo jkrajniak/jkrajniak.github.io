@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Dagster Parallelism in Azure Cloud"
-date: 2026-03-21
+date: 2026-06-17
 description: "Fan-out/fan-in with @graph_asset works in-process — until you scale to K8s and need shared storage for manifests and batch metadata. Here is how to wire ADLS IO managers and avoid the Snowflake dict trap on Dagster 1.12."
 tags:
   - dagster
