@@ -1,0 +1,15 @@
+flowchart LR
+  A["Open media.local<br/>on the phone"] --> B["Install Jellyfin<br/>from Play Store"]
+  B --> C["Same Wi-Fi as the laptop"]
+  C --> D["Add server<br/>jellyfin.local:8096"]
+  D --> E["Sign in"]
+  E --> F["Pick a title"]
+  F --> G{"Phone can<br/>direct-play?"}
+  G -->|yes| H["Stream the file"]
+  G -->|no E-AC3 etc.| I["Jellyfin transcodes<br/>VAAPI"]
+  I --> H
+
+  classDef step fill:#56B4E9,stroke:#0072B2,color:#00334d
+  classDef dec fill:#E69F00,stroke:#D55E00,color:#3d2a00
+  class A,B,C,D,E,F,H,I step
+  class G dec

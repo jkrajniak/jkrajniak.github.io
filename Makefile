@@ -1,4 +1,4 @@
-.PHONY: install serve build clean migrate migrate-text migrate-devto diagram-dagster-azure-io
+.PHONY: install serve build clean migrate migrate-text migrate-devto diagram-dagster-azure-io diagram-medioteka
 
 SHELL := /bin/bash
 RBENV := eval "$$(rbenv init - bash)" &&
@@ -29,6 +29,15 @@ diagram-dagster-azure-io:
 		-i assets/images/posts/dagster-parallelism-in-azure-cloud/pipeline-flow.mmd \
 		-o assets/images/posts/dagster-parallelism-in-azure-cloud/pipeline-flow.svg \
 		-b transparent
+
+MEDIOTEKA_DIAGRAMS := components usecase-watch usecase-add usecase-bandwidth
+diagram-medioteka:
+	@for name in $(MEDIOTEKA_DIAGRAMS); do \
+		npx --yes @mermaid-js/mermaid-cli \
+			-i assets/images/posts/old-laptop-jellyfin-media-server/$$name.mmd \
+			-o assets/images/posts/old-laptop-jellyfin-media-server/$$name.svg \
+			-b transparent; \
+	done
 
 # ── Migration ────────────────────────────────────────────────────────
 migrate:

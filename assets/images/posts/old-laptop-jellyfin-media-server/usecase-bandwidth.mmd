@@ -1,0 +1,17 @@
+flowchart LR
+  C[cron] --> F{full-speed<br/>switch on?}
+  F -->|yes| U[unlimited]
+  F -->|no| N{night?}
+  N -->|yes| U
+  N -->|no| E{empty ≥5 min?}
+  E -->|yes| U
+  E -->|no| S[1 MiB/s]
+
+  classDef step fill:#56B4E9,stroke:#0072B2,color:#00334d
+  classDef dec fill:#E69F00,stroke:#D55E00,color:#3d2a00
+  classDef full fill:#009E73,stroke:#00724f,color:#003322
+  classDef slow fill:#E69F00,stroke:#D55E00,color:#3d2a00
+  class C step
+  class F,N,E dec
+  class U full
+  class S slow

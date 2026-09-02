@@ -1,0 +1,11 @@
+flowchart LR
+  A["Files you already have"] --> B["Copy or rsync<br/>to /mnt/media"]
+  B --> C["movies/ or tv/"]
+  C --> D["Optional:<br/>Radarr or Sonarr rename"]
+  D --> E["Jellyfin folder watch<br/>+ 15 min scan"]
+  E --> F["Title appears<br/>in the app"]
+
+  classDef step fill:#E69F00,stroke:#D55E00,color:#3d2a00
+  classDef opt fill:#56B4E9,stroke:#0072B2,color:#00334d
+  class A,B,C,E,F step
+  class D opt

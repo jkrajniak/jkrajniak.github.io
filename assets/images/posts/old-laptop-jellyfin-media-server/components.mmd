@@ -1,0 +1,47 @@
+flowchart TB
+  subgraph lan [Home LAN]
+    Phone["Phone or TV<br/>Jellyfin app"]
+    Browser["Browser"]
+    Mac["Admin laptop<br/>git + SSH"]
+  end
+
+  subgraph box [Old laptop — Ubuntu Server]
+    Nginx["nginx :80<br/>landing + vhosts"]
+    JF["Jellyfin :8096"]
+    Radarr["Radarr"]
+    Sonarr["Sonarr"]
+    Prowlarr["Prowlarr"]
+    QBit["qBittorrent"]
+    Cron["cron every 5 min"]
+  end
+
+  USB[("/mnt/media<br/>movies · tv · downloads")]
+  HA["Home Assistant<br/>anyone home"]
+
+  Phone -->|"play :8096"| JF
+  Browser --> Nginx
+  Nginx --> JF
+  Nginx --> Radarr
+  Nginx --> Sonarr
+  Nginx --> Prowlarr
+  Nginx --> QBit
+  Mac -->|"rsync / SSH"| box
+  Prowlarr --> Radarr
+  Prowlarr --> Sonarr
+  Radarr --> QBit
+  Sonarr --> QBit
+  QBit --> USB
+  Radarr --> USB
+  Sonarr --> USB
+  JF --> USB
+  Cron -->|"GET state"| HA
+  Cron -->|"dl_limit"| QBit
+
+  classDef client fill:#56B4E9,stroke:#0072B2,color:#00334d
+  classDef app fill:#E69F00,stroke:#D55E00,color:#3d2a00
+  classDef store fill:#009E73,stroke:#00724f,color:#003322
+  classDef ext fill:#CC79A7,stroke:#882d5f,color:#3d0024
+  class Phone,Browser,Mac client
+  class Nginx,JF,Radarr,Sonarr,Prowlarr,QBit,Cron app
+  class USB store
+  class HA ext
