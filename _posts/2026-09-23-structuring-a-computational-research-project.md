@@ -93,3 +93,5 @@ Visually it's plain: a one-color masthead, a callout box for the summary, and on
 ### What this buys you
 
 None of these habits are free — a decision record takes five extra minutes over just making the call, and an evidence table takes discipline to keep current. What they buy back is larger: a project that outlives your own memory of it. Six months later, "which run produced Figure 3" is a `grep` through `artifacts_index.md`, not an archaeology project. A reviewer's "why this baseline and not that one" has a file with a date on it. And the collaborator who only has two minutes gets a page that tells them exactly what you need, instead of a folder they'd have to spelunk through to figure it out themselves.
+
+I packaged the templates behind these habits — the experiment log, the decision record, the artifact-archive checklist, the action-brief skeleton — as installable [Claude Code](https://claude.com/claude-code) skills: [github.com/jkrajniak/research-skills](https://github.com/jkrajniak/research-skills). `/plugin install research-skills` gets you the same six habits without retyping any of the above.
