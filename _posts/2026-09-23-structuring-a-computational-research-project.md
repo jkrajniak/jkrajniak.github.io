@@ -2,7 +2,7 @@
 layout: post
 title: "Four repos and a paper trail: structuring a research project"
 date: 2026-09-23
-description: "Splitting code, paper, notebook, and artifacts into separate repos, and the three small habits — decision records, experiment logs, and hash-pinned evidence — that make six-month-old results explainable again."
+description: "How I start a new research project: a one-page brief before any code, then the four-repo layout and the small habits — decision records, experiment logs, hash-pinned evidence — that make six-month-old results explainable again."
 tags:
   - research
   - reproducibility
@@ -13,6 +13,18 @@ tags:
 Six months into a research project, someone asks a simple question: *which run produced the number in Figure 3?* If the honest answer involves scrolling a chat history, guessing which config file was live that week, or asking a collaborator to "check their laptop," the project has a structure problem, not a memory problem. This is the layout and the small set of habits I use to make sure that question always has a one-line answer.
 
 None of this is exotic. It borrows more from software engineering — version control, checksums, changelogs — than from anything specific to research. The point isn't process for its own sake; it's that six months is longer than anyone's working memory, and a paper claim that can't be traced back to an exact run isn't a claim, it's a recollection.
+
+### Start with the brief, not the repo
+
+The habit that matters most comes before any of the ones below, and before the project exists at all: a new idea gets a one-page brief before it gets a workspace. Not a summary written afterward for people who didn't read the full proposal — the *first* document, written specifically so a collaborator can say "go" or "here's what's missing" in the time it takes to read one page, before either of you has invested in scaffolding or a ten-page write-up that might not survive the first question.
+
+The layout is the same every time: the question at the top, stated fairly enough that either a positive or a negative result would be a real outcome; a short list of what's actually needed *from the reader specifically*; then a staged plan where each stage states three things — the question it settles, what it hands the next stage, and the condition under which it would end the project outright. A section spelling out what's deliberately **not** being done heads off half the follow-up questions before they're asked. No dates, no calendar — stages are ordered by dependency, and scheduling is a separate conversation once people agree on the sequence. It ends with a short numbered list of exactly what's blocking, so the first reply can be "here's #1" instead of a paragraph of caveats.
+
+Visually it's plain: a one-color masthead, a callout box for the summary, and one card per stage, built with a small reusable LaTeX template so the formatting decision only gets made once. A colour-blind-safe palette and a status badge (go / stop / blocking) do the work that would otherwise take a paragraph of hedging — a stage that's a clear stop condition is more useful in red than in a sentence starting with "note that."
+
+The same format works the other way round too, once a project already has a full proposal: distill it into a one-pager for the people who were never going to read the whole thing. But starting with the brief, before the long document, before the workspace, is the version that saves the most time — it's the cheapest place to find out an idea needs rethinking.
+
+Only once the brief has a "go" does the rest of this apply.
 
 ### One workspace, four repos, four jobs
 
@@ -82,16 +94,8 @@ Two more templates close the loop. An **experiment log** — one file per run, w
 
 A short script re-hashes every pinned archive against this table and fails loudly on a mismatch. Running it before a submission answers, mechanically, whether every number in the manuscript still points at the file that produced it — instead of trusting that it does.
 
-### A one-page version, for people who don't want to open four repos
-
-Collaborators don't want to read a private notebook to find out what you need from them. For that, a proposal or a request for input gets a companion one-sheet: a single page, built to be skimmed in two minutes rather than read start to finish.
-
-The layout is the same every time: the question at the top, a short list of what's actually needed *from the reader specifically*, then a staged plan where each stage states three things — the question it settles, what it hands the next stage, and the condition under which it would end the project outright. A section spelling out what's deliberately **not** being done heads off half the follow-up questions before they're asked. No dates, no calendar — stages are ordered by dependency, and scheduling is a separate conversation once people agree on the sequence. It ends with a short numbered list of exactly what's blocking, so the first reply can be "here's #1" instead of a paragraph of caveats.
-
-Visually it's plain: a one-color masthead, a callout box for the summary, and one card per stage, built with a small reusable LaTeX template so the formatting decision only gets made once. A colour-blind-safe palette and a status badge (go / stop / blocking) do the work that would otherwise take a paragraph of hedging — a stage that's a clear stop condition is more useful in red than in a sentence starting with "note that."
-
 ### What this buys you
 
-None of these habits are free — a decision record takes five extra minutes over just making the call, and an evidence table takes discipline to keep current. What they buy back is larger: a project that outlives your own memory of it. Six months later, "which run produced Figure 3" is a `grep` through `artifacts_index.md`, not an archaeology project. A reviewer's "why this baseline and not that one" has a file with a date on it. And the collaborator who only has two minutes gets a page that tells them exactly what you need, instead of a folder they'd have to spelunk through to figure it out themselves.
+None of these habits are free — a decision record takes five extra minutes over just making the call, and an evidence table takes discipline to keep current. What they buy back is larger: a project that outlives your own memory of it, and, further back, one that never got scaffolded in the first place if the one-page version couldn't get a "go." Six months in, "which run produced Figure 3" is a `grep` through `artifacts_index.md`, not an archaeology project. A reviewer's "why this baseline and not that one" has a file with a date on it. And the collaborator who only has two minutes gets a page that tells them exactly what you need, instead of a folder they'd have to spelunk through to figure it out themselves.
 
-I packaged the templates behind these habits — the experiment log, the decision record, the artifact-archive checklist, the action-brief skeleton — as installable [Claude Code](https://claude.com/claude-code) skills: [github.com/jkrajniak/research-skills](https://github.com/jkrajniak/research-skills). `/plugin install research-skills` gets you the same six habits without retyping any of the above.
+I packaged all of this — the brief, the workspace layout, the experiment log, the decision record, the artifact-archive checklist — as installable [Claude Code](https://claude.com/claude-code) skills, in the order a new project actually uses them: [github.com/jkrajniak/research-skills](https://github.com/jkrajniak/research-skills). `/plugin install research-skills` gets you the same habits without retyping any of the above.
