@@ -1,0 +1,24 @@
+flowchart LR
+    Brief["one-page brief<br/>(before anything exists)"] -->|"go"| Research
+
+    subgraph ws [" "]
+        direction LR
+        Research["project-research<br/>plans, decisions, logs"]
+        Code["project-code<br/>public, runnable"]
+        Artifacts[("project-artifacts<br/>large files, no git")]
+        Paper["project-paper<br/>manuscript, figures"]
+    end
+
+    Research -->|"stable"| Code
+    Research -->|"large outputs"| Artifacts
+    Research -->|"polished"| Paper
+    Code -.->|"produces"| Artifacts
+    Artifacts -.->|"pinned + hashed"| Paper
+
+    classDef brief fill:#EDF4F9,stroke:#0072B2,color:#0B3E5C
+    classDef repo fill:#ffffff,stroke:#56626E,color:#1B1F24
+    classDef store fill:#009E73,stroke:#00724f,color:#e8fff7
+    class Brief brief
+    class Research,Code,Paper repo
+    class Artifacts store
+    style ws fill:transparent,stroke:#D3DCE4,stroke-width:1px

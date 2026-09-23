@@ -1,4 +1,4 @@
-.PHONY: install serve build clean migrate migrate-text migrate-devto diagram-dagster-azure-io diagram-medioteka
+.PHONY: install serve build clean migrate migrate-text migrate-devto diagram-dagster-azure-io diagram-medioteka diagram-research-project-structure
 
 SHELL := /bin/bash
 RBENV := eval "$$(rbenv init - bash)" &&
@@ -38,6 +38,12 @@ diagram-medioteka:
 			-o assets/images/posts/old-laptop-jellyfin-media-server/$$name.svg \
 			-b transparent; \
 	done
+
+diagram-research-project-structure:
+	npx --yes @mermaid-js/mermaid-cli \
+		-i assets/images/posts/structuring-a-computational-research-project/workspace-layout.mmd \
+		-o assets/images/posts/structuring-a-computational-research-project/workspace-layout.svg \
+		-b transparent
 
 # ── Migration ────────────────────────────────────────────────────────
 migrate:
