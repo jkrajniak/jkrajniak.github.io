@@ -68,7 +68,7 @@ tar -czf "artifacts/${ARCHIVE}" results/ configs/run_config.json scripts/run.py
 shasum -a 256 "artifacts/${ARCHIVE}" | tee "artifacts/${ARCHIVE}.sha256"
 ```
 
-The rule is one archive per run, never overwritten, checksum stored next to it. It costs nothing at run time and turns "I think that's the same run" into a `shasum -c` that either passes or doesn't.
+The rule is one archive per run, never overwritten, checksum stored next to it. Each archive also gets one row in `artifacts_index.md` in the research repo (date, path, code commit, hash, a note on what it supersedes), so there is a single table to search later. It costs nothing at run time and turns "I think that's the same run" into a `shasum -c` that either passes or doesn't.
 
 ### One file per decision, including the obvious ones
 
@@ -111,4 +111,9 @@ A short script re-hashes every pinned archive against this table and fails loudl
 
 None of these habits are free. A decision record takes five extra minutes over just making the call, and an evidence table takes discipline to keep current. What they buy back is larger: a project that outlives your own memory of it, and, further back, one that never got scaffolded in the first place if the one-page version couldn't get a "go." Six months in, "which run produced Figure 3" is a `grep` through `artifacts_index.md`, not an archaeology project. A reviewer's "why this baseline and not that one" has a file with a date on it. And the collaborator who only has two minutes gets a page that tells them exactly what you need, instead of a folder they'd have to spelunk through to figure it out themselves.
 
-I packaged all of this (the brief, the workspace layout, the experiment log, the decision record, the artifact-archive checklist) as installable [Claude Code](https://claude.com/claude-code) skills, in the order a new project actually uses them: [github.com/jkrajniak/research-skills](https://github.com/jkrajniak/research-skills). `/plugin install research-skills` gets you the same habits without retyping any of the above.
+I packaged all of this (the brief, the workspace layout, the experiment log, the decision record, the artifact-archive checklist, plus a debugging-discipline skill for the hard-to-localize bugs) as installable [Claude Code](https://claude.com/claude-code) skills, in the order a new project actually uses them: [github.com/jkrajniak/research-skills](https://github.com/jkrajniak/research-skills). Two commands get you the same habits without retyping any of the above:
+
+```
+/plugin marketplace add jkrajniak/research-skills
+/plugin install research-skills
+```
